@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cia Micro Informática</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Roboto+Condensed:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="images/logo.jpg" type="image/x-icon">
+</head>
+
+<body>
+
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+    <!-- ═══ SIDEBAR ═══ -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-logo">
+            <div class="sidebar-logo-img">
+                <img src="images/logo.jpg" alt="logo">
+            </div>
+            <div class="sidebar-text">
+                <div class="sidebar-brand"><span>CIA</span> MICRO</div>
+                <div class="sidebar-sub">Informática</div>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div class="sidebar-section-label">Menu</div>
+
+            <button class="sidebar-link active" data-tip="Início" onclick="showPage('home')">
+                <svg viewBox="0 0 24 24">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                    <polyline points="9 22 9 12 15 12 15 22" />
+                </svg>
+                <span class="sidebar-link-text">Início</span>
+            </button>
+            <button class="sidebar-link" data-tip="Catálogo" onclick="showPage('catalogo')">
+                <svg viewBox="0 0 24 24">
+                    <rect x="2" y="3" width="20" height="14" rx="2" />
+                    <line x1="8" y1="21" x2="16" y2="21" />
+                    <line x1="12" y1="17" x2="12" y2="21" />
+                </svg>
+                <span class="sidebar-link-text">Catálogo de Produtos</span>
+            </button>
+
+            <div class="sidebar-section-label">Categorias</div>
+            <button class="sidebar-cat active" onclick="showPage('catalogo'); filterCat('todos')">
+                <span class="sidebar-cat-dot" style="background:#1565c0"></span> Todos
+            </button>
+            <button class="sidebar-cat" onclick="showPage('catalogo'); filterCat('notebooks')">
+                <span class="sidebar-cat-dot" style="background:#1976d2"></span> Notebooks
+            </button>
+            <button class="sidebar-cat" onclick="showPage('catalogo'); filterCat('desktops')">
+                <span class="sidebar-cat-dot" style="background:#0d47a1"></span> Desktops
+            </button>
+            <button class="sidebar-cat" onclick="showPage('catalogo'); filterCat('perifericos')">
+                <span class="sidebar-cat-dot" style="background:#d32f2f"></span> Periféricos
+            </button>
+            <button class="sidebar-cat" onclick="showPage('catalogo'); filterCat('impressoras')">
+                <span class="sidebar-cat-dot" style="background:#e65100"></span> Impressoras
+            </button>
+            <button class="sidebar-cat" onclick="showPage('catalogo'); filterCat('redes')">
+                <span class="sidebar-cat-dot" style="background:#2e7d32"></span> Redes & Wi-Fi
+            </button>
+            <button class="sidebar-cat" onclick="showPage('catalogo'); filterCat('acessorios')">
+                <span class="sidebar-cat-dot" style="background:#6a1a9a"></span> Acessórios
+            </button>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="sidebar-footer-info">
+                <strong>(81) 3101-1800</strong><br>
+                Seg–Sex 08h–18h · Sáb 08h–13h
+            </div>
+            <button class="sidebar-collapse-btn" onclick="toggleCollapse()" title="Retrair menu">
+                <svg viewBox="0 0 24 24">
+                    <polyline points="15 18 9 12 15 6" />
+                </svg>
+            </button>
+        </div>
+    </aside>
+
+    <!-- ═══ MAIN ═══ -->
+    <div class="main" id="main">
+
+        <!-- TOPBAR -->
+        <header class="topbar">
+            <button class="topbar-menu-btn" onclick="toggleSidebar()" aria-label="Menu">
+                <svg viewBox="0 0 24 24">
+                    <line x1="3" y1="6" x2="21" y2="6" />
+                    <line x1="3" y1="12" x2="21" y2="12" />
+                    <line x1="3" y1="18" x2="21" y2="18" />
+                </svg>
+            </button>
+            <div class="search-wrap">
+                <svg class="search-icon" viewBox="0 0 24 24">
+                    <circle cx="11" cy="11" r="8" />
+                    <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                </svg>
+                <input class="search-input" id="searchInput" type="text" placeholder="Buscar produtos..."
+                    oninput="onSearch(this.value)" />
+            </div>
+            <span class="search-count" id="searchCount">10 produtos</span>
+            <a href="https://wa.me/558131011800" target="_blank" class="topbar-wa">
+                <svg viewBox="0 0 24 24">
+                    <path
+                        d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
+                    <path
+                        d="M12 0C5.373 0 0 5.373 0 12c0 2.125.558 4.121 1.532 5.857L.057 23.5l5.784-1.517A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 0 1-5.006-1.371l-.359-.214-3.733.979 1.004-3.648-.232-.375A9.818 9.818 0 1 1 12 21.818z" />
+                </svg>
+                WhatsApp
+            </a>
+        </header>
+
+        <!-- ═══ PAGE: HOME ═══ -->
+        <div class="page active" id="page-home">
+
+            <!-- HERO -->
+            <div class="hero">
+                <div class="hero-inner">
+                    <div class="hero-text">
+                        <div class="hero-eyebrow">Caruaru · Duas unidades</div>
+                        <h1>Sua loja de informática<br>completa em <em>Caruaru</em></h1>
+                        <p class="hero-sub">Computadores, notebooks, periféricos, impressoras, redes e assistência
+                            técnica especializada. Duas unidades para atender você melhor.</p>
+                        <div class="hero-ctas">
+                            <button class="btn-azul" onclick="showPage('catalogo')">Ver catálogo</button>
+                            <a href="https://wa.me/558131011800" target="_blank" class="btn-ghost">Falar no WhatsApp</a>
+                        </div>
+                        <div class="hero-stats">
+                            <div>
+                                <div class="hero-stat-num">+20</div>
+                                <div class="hero-stat-label">Anos no mercado</div>
+                            </div>
+                            <div>
+                                <div class="hero-stat-num">2</div>
+                                <div class="hero-stat-label">Unidades</div>
+                            </div>
+                            <div>
+                                <div class="hero-stat-num">Assistência</div>
+                                <div class="hero-stat-label">Técnica especializada</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hero-photo">
+                        <div class="hero-photo-placeholder">
+                            <svg viewBox="0 0 24 24">
+                                <rect x="3" y="3" width="18" height="18" rx="2" />
+                                <circle cx="8.5" cy="8.5" r="1.5" />
+                                <polyline points="21 15 16 10 5 21" />
+                            </svg>
+                            Foto da loja
+                        </div>
+                        <!-- <img src="loja.jpg" alt="Cia Micro"> -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- SERVIÇOS -->
+            <section id="servicos" class="home-section white">
+                <div class="section-eyebrow">O que fazemos</div>
+                <h2 class="section-h2">Serviços especializados</h2>
+                <div class="servicos-grid">
+                    <div class="servico-card">
+                        <div class="servico-icon"><svg viewBox="0 0 24 24">
+                                <path
+                                    d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
+                            </svg></div>
+                        <h4>Assistência Técnica</h4>
+                        <p>Manutenção e reparo de computadores, notebooks, impressoras e periféricos. Diagnóstico
+                            gratuito.</p>
+                    </div>
+                    <div class="servico-card">
+                        <div class="servico-icon"><svg viewBox="0 0 24 24">
+                                <rect x="2" y="3" width="20" height="14" rx="2" />
+                                <line x1="8" y1="21" x2="16" y2="21" />
+                                <line x1="12" y1="17" x2="12" y2="21" />
+                            </svg></div>
+                        <h4>Formatação e Instalação</h4>
+                        <p>Formatação de computadores e notebooks, instalação de Windows, drivers e softwares.</p>
+                    </div>
+                    <div class="servico-card">
+                        <div class="servico-icon"><svg viewBox="0 0 24 24">
+                                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+                            </svg></div>
+                        <h4>Upgrade de Hardware</h4>
+                        <p>Ampliação de memória RAM, troca de HD por SSD, atualização de processador e placa de vídeo.
+                        </p>
+                    </div>
+                    <div class="servico-card">
+                        <div class="servico-icon"><svg viewBox="0 0 24 24">
+                                <path d="M1 6l5 5 5-5" />
+                                <path d="M6 11V3" />
+                                <path d="M23 18l-5-5-5 5" />
+                                <path d="M18 13v8" />
+                            </svg></div>
+                        <h4>Redes e Cabeamento</h4>
+                        <p>Instalação de redes cabeadas e sem fio, configuração de roteadores e switches para empresas.
+                        </p>
+                    </div>
+                    <div class="servico-card">
+                        <div class="servico-icon"><svg viewBox="0 0 24 24">
+                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                            </svg></div>
+                        <h4>Suporte Remoto</h4>
+                        <p>Atendimento técnico online para resolver problemas de software sem precisar sair de casa.</p>
+                    </div>
+                    <div class="servico-card">
+                        <div class="servico-icon"><svg viewBox="0 0 24 24">
+                                <path d="M20 7H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z" />
+                                <circle cx="12" cy="12" r="2" />
+                            </svg></div>
+                        <h4>Manutenção Preventiva</h4>
+                        <p>Limpeza interna, troca de pasta térmica, verificação geral para prolongar a vida útil do
+                            equipamento.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SOBRE -->
+            <section id="sobre" class="home-section light">
+                <div class="section-eyebrow">Quem somos</div>
+                <h2 class="section-h2">Sobre a Cia Micro</h2>
+                <div class="sobre-inner">
+                    <div class="sobre-photo">
+                        <div class="sobre-photo-placeholder">
+                            <svg viewBox="0 0 24 24">
+                                <rect x="3" y="3" width="18" height="18" rx="2" />
+                                <circle cx="8.5" cy="8.5" r="1.5" />
+                                <polyline points="21 15 16 10 5 21" />
+                            </svg>
+                            Foto da loja
+                        </div>
+                        <!-- <img src="sobre.jpg" alt="Cia Micro"> -->
+                    </div>
+                    <div class="sobre-text">
+                        <p>A Cia Micro Informática é referência em tecnologia em Caruaru há mais de 20 anos. Trabalhamos
+                            com as melhores marcas do mercado — Samsung, Lenovo, HP, Dell, Asus — e oferecemos
+                            assistência técnica especializada para manter seus equipamentos sempre funcionando.</p>
+                        <p>Nossa equipe é formada por técnicos certificados e apaixonados por tecnologia, prontos para
+                            atender desde o usuário doméstico até empresas que precisam de soluções completas em TI.</p>
+                        <p>Com duas unidades estrategicamente localizadas em Caruaru, estamos sempre perto de você.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- UNIDADES -->
+            <section id="unidades" class="home-section white">
+                <div class="section-eyebrow red">Onde estamos</div>
+                <h2 class="section-h2">Duas unidades em Caruaru</h2>
+                <div class="unidades-grid">
+
+                    <!-- Unidade 1 -->
+                    <div class="unidade-card">
+                        <div class="unidade-header">
+                            <div class="unidade-num">1</div>
+                            <div>
+                                <div class="unidade-header-text">Cia Micro — Unidade 1</div>
+                                <div class="unidade-header-sub">Maurício de Nassau</div>
+                            </div>
+                        </div>
+                        <div class="unidade-body">
+                            <div class="unidade-row">
+                                <div class="unidade-row-icon"><svg viewBox="0 0 24 24">
+                                        <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 1 1 18 0z" />
+                                        <circle cx="12" cy="10" r="3" />
+                                    </svg></div>
+                                <div>
+                                    <div class="unidade-row-label">Endereço</div>
+                                    <div class="unidade-row-text">R. João Cursino, 519<br>Maurício de Nassau, Caruaru –
+                                        PE<br>CEP 55012-600</div>
+                                </div>
+                            </div>
+                            <div class="unidade-row">
+                                <div class="unidade-row-icon"><svg viewBox="0 0 24 24">
+                                        <path
+                                            d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.6 3.38 2 2 0 0 1 3.57 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.54a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" />
+                                    </svg></div>
+                                <div>
+                                    <div class="unidade-row-label">Telefone</div>
+                                    <div class="unidade-row-text">(81) 3101-1800</div>
+                                </div>
+                            </div>
+                            <div class="unidade-row">
+                                <div class="unidade-row-icon"><svg viewBox="0 0 24 24">
+                                        <circle cx="12" cy="12" r="10" />
+                                        <polyline points="12 6 12 12 16 14" />
+                                    </svg></div>
+                                <div>
+                                    <div class="unidade-row-label">Horário</div>
+                                    <table class="horarios-table">
+                                        <tr>
+                                            <td>Seg – Sex</td>
+                                            <td>08h – 18h</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Sábado</td>
+                                            <td>08h – 13h</td>
+                                        </tr>
+                                        <tr class="fechado">
+                                            <td>Domingo</td>
+                                            <td>Fechado</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <a href="https://wa.me/558131011800" target="_blank" class="unidade-wa">
+                                <svg viewBox="0 0 24 24">
+                                    <path
+                                        d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
+                                    <path
+                                        d="M12 0C5.373 0 0 5.373 0 12c0 2.125.558 4.121 1.532 5.857L.057 23.5l5.784-1.517A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 0 1-5.006-1.371l-.359-.214-3.733.979 1.004-3.648-.232-.375A9.818 9.818 0 1 1 12 21.818z" />
+                                </svg>
+                                Falar com Unidade 1
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Unidade 2 -->
+                    <div class="unidade-card">
+                        <div class="unidade-header" style="background:var(--azul-dark);">
+                            <div class="unidade-num" style="color:var(--azul-dark);">2</div>
+                            <div>
+                                <div class="unidade-header-text">Cia Micro — Unidade 2</div>
+                                <div class="unidade-header-sub">Nossa Sra. das Dores</div>
+                            </div>
+                        </div>
+                        <div class="unidade-body">
+                            <div class="unidade-row">
+                                <div class="unidade-row-icon"><svg viewBox="0 0 24 24">
+                                        <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 1 1 18 0z" />
+                                        <circle cx="12" cy="10" r="3" />
+                                    </svg></div>
+                                <div>
+                                    <div class="unidade-row-label">Endereço</div>
+                                    <div class="unidade-row-text">R. Treze de Maio, 6B<br>Nossa Sra. das Dores, Caruaru
+                                        – PE<br>CEP 55006-000</div>
+                                </div>
+                            </div>
+                            <div class="unidade-row">
+                                <div class="unidade-row-icon"><svg viewBox="0 0 24 24">
+                                        <path
+                                            d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.6 3.38 2 2 0 0 1 3.57 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.54a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" />
+                                    </svg></div>
+                                <div>
+                                    <div class="unidade-row-label">Telefone</div>
+                                    <div class="unidade-row-text">(81) 99779-1234</div>
+                                </div>
+                            </div>
+                            <div class="unidade-row">
+                                <div class="unidade-row-icon"><svg viewBox="0 0 24 24">
+                                        <circle cx="12" cy="12" r="10" />
+                                        <polyline points="12 6 12 12 16 14" />
+                                    </svg></div>
+                                <div>
+                                    <div class="unidade-row-label">Horário</div>
+                                    <table class="horarios-table">
+                                        <tr>
+                                            <td>Seg – Sex</td>
+                                            <td>08h – 18h</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Sábado</td>
+                                            <td>08h – 13h</td>
+                                        </tr>
+                                        <tr class="fechado">
+                                            <td>Domingo</td>
+                                            <td>Fechado</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <a href="https://wa.me/5581997791234" target="_blank" class="unidade-wa">
+                                <svg viewBox="0 0 24 24">
+                                    <path
+                                        d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
+                                    <path
+                                        d="M12 0C5.373 0 0 5.373 0 12c0 2.125.558 4.121 1.532 5.857L.057 23.5l5.784-1.517A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 0 1-5.006-1.371l-.359-.214-3.733.979 1.004-3.648-.232-.375A9.818 9.818 0 1 1 12 21.818z" />
+                                </svg>
+                                Falar com Unidade 2
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <footer class="main-footer">
+                <div class="main-footer-brand"><span>CIA</span> MICRO Informática</div>
+                <div class="main-footer-copy">© 2025 Cia Micro. Todos os direitos reservados.</div>
+            </footer>
+        </div>
+
+        <!-- ═══ PAGE: CATÁLOGO ═══ -->
+        <div class="page" id="page-catalogo">
+            <div class="page-content" style="flex:1;">
+                <div class="catalogo-toolbar">
+                    <div>
+                        <div class="catalogo-title">Catálogo <span id="catTitleLabel">— Todos</span></div>
+                    </div>
+                    <div class="catalogo-filters">
+                        <button class="filter-btn active" onclick="filterCat('todos')">Todos</button>
+                        <button class="filter-btn" onclick="filterCat('notebooks')">Notebooks</button>
+                        <button class="filter-btn" onclick="filterCat('desktops')">Desktops</button>
+                        <button class="filter-btn" onclick="filterCat('perifericos')">Periféricos</button>
+                        <button class="filter-btn" onclick="filterCat('impressoras')">Impressoras</button>
+                        <button class="filter-btn" onclick="filterCat('redes')">Redes</button>
+                        <button class="filter-btn" onclick="filterCat('acessorios')">Acessórios</button>
+                    </div>
+                </div>
+
+                <div class="produtos-grid" id="produtosGrid">
+
+                    <div class="produto-card" data-cat="notebooks"
+                        data-nome="notebook samsung galaxy book intel core i5">
+                        <div class="produto-foto">
+                            <div class="produto-foto-placeholder"><svg viewBox="0 0 24 24">
+                                    <rect x="3" y="3" width="18" height="18" rx="2" />
+                                    <circle cx="8.5" cy="8.5" r="1.5" />
+                                    <polyline points="21 15 16 10 5 21" />
+                                </svg>Foto</div>
+                            <div class="produto-cat-badge" style="color:#1565c0;">Notebook</div>
+                        </div>
+                        <div class="produto-body">
+                            <div class="produto-nome">Notebook Samsung Galaxy Book</div>
+                            <div class="produto-desc">Intel Core i5, 8GB RAM, 256GB SSD, tela 15.6" Full HD.</div>
+                            <div class="produto-footer">
+                                <div class="produto-preco"><sup>R$</sup>2.899</div>
+                                <a href="https://wa.me/558131011800?text=Olá! Tenho interesse no Notebook Samsung Galaxy Book."
+                                    target="_blank" class="produto-wa"><svg viewBox="0 0 24 24">
+                                        <path
+                                            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
+                                        <path
+                                            d="M12 0C5.373 0 0 5.373 0 12c0 2.125.558 4.121 1.532 5.857L.057 23.5l5.784-1.517A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 0 1-5.006-1.371l-.359-.214-3.733.979 1.004-3.648-.232-.375A9.818 9.818 0 1 1 12 21.818z" />
+                                    </svg>Pedir</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="produto-card" data-cat="notebooks"
+                        data-nome="notebook lenovo ideapad amd ryzen processador">
+                        <div class="produto-foto">
+                            <div class="produto-foto-placeholder"><svg viewBox="0 0 24 24">
+                                    <rect x="3" y="3" width="18" height="18" rx="2" />
+                                    <circle cx="8.5" cy="8.5" r="1.5" />
+                                    <polyline points="21 15 16 10 5 21" />
+                                </svg>Foto</div>
+                            <div class="produto-cat-badge" style="color:#1565c0;">Notebook</div>
+                        </div>
+                        <div class="produto-body">
+                            <div class="produto-nome">Notebook Lenovo IdeaPad</div>
+                            <div class="produto-desc">AMD Ryzen 5, 8GB RAM, 512GB SSD, Windows 11, tela 14".</div>
+                            <div class="produto-footer">
+                                <div class="produto-preco"><sup>R$</sup>2.499</div>
+                                <a href="https://wa.me/558131011800?text=Olá! Tenho interesse no Notebook Lenovo IdeaPad."
+                                    target="_blank" class="produto-wa"><svg viewBox="0 0 24 24">
+                                        <path
+                                            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
+                                        <path
+                                            d="M12 0C5.373 0 0 5.373 0 12c0 2.125.558 4.121 1.532 5.857L.057 23.5l5.784-1.517A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 0 1-5.006-1.371l-.359-.214-3.733.979 1.004-3.648-.232-.375A9.818 9.818 0 1 1 12 21.818z" />
+                                    </svg>Pedir</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="produto-card" data-cat="desktops"
+                        data-nome="computador desktop pc completo intel core i3">
+                        <div class="produto-foto">
+                            <div class="produto-foto-placeholder"><svg viewBox="0 0 24 24">
+                                    <rect x="3" y="3" width="18" height="18" rx="2" />
+                                    <circle cx="8.5" cy="8.5" r="1.5" />
+                                    <polyline points="21 15 16 10 5 21" />
+                                </svg>Foto</div>
+                            <div class="produto-cat-badge" style="color:#0d47a1;">Desktop</div>
+                        </div>
+                        <div class="produto-body">
+                            <div class="produto-nome">PC Completo Intel Core i3</div>
+                            <div class="produto-desc">Intel Core i3 10ª gen, 8GB RAM, 240GB SSD, monitor 19.5".</div>
+                            <div class="produto-footer">
+                                <div class="produto-preco"><sup>R$</sup>1.899</div>
+                                <a href="https://wa.me/558131011800?text=Olá! Tenho interesse no PC Completo Intel Core i3."
+                                    target="_blank" class="produto-wa"><svg viewBox="0 0 24 24">
+                                        <path
+                                            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
+                                        <path
+                                            d="M12 0C5.373 0 0 5.373 0 12c0 2.125.558 4.121 1.532 5.857L.057 23.5l5.784-1.517A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 0 1-5.006-1.371l-.359-.214-3.733.979 1.004-3.648-.232-.375A9.818 9.818 0 1 1 12 21.818z" />
+                                    </svg>Pedir</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="produto-card" data-cat="desktops"
+                        data-nome="desktop gamer computador i5 placa de video gtx">
+                        <div class="produto-foto">
+                            <div class="produto-foto-placeholder"><svg viewBox="0 0 24 24">
+                                    <rect x="3" y="3" width="18" height="18" rx="2" />
+                                    <circle cx="8.5" cy="8.5" r="1.5" />
+                                    <polyline points="21 15 16 10 5 21" />
+                                </svg>Foto</div>
+                            <div class="produto-cat-badge" style="color:#0d47a1;">Desktop</div>
+                        </div>
+                        <div class="produto-body">
+                            <div class="produto-nome">Desktop Gamer Core i5</div>
+                            <div class="produto-desc">Intel Core i5 12ª gen, 16GB RAM, SSD 480GB + HD 1TB, GTX 1650.
+                            </div>
+                            <div class="produto-footer">
+                                <div class="produto-preco"><sup>R$</sup>3.499</div>
+                                <a href="https://wa.me/558131011800?text=Olá! Tenho interesse no Desktop Gamer Core i5."
+                                    target="_blank" class="produto-wa"><svg viewBox="0 0 24 24">
+                                        <path
+                                            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
+                                        <path
+                                            d="M12 0C5.373 0 0 5.373 0 12c0 2.125.558 4.121 1.532 5.857L.057 23.5l5.784-1.517A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 0 1-5.006-1.371l-.359-.214-3.733.979 1.004-3.648-.232-.375A9.818 9.818 0 1 1 12 21.818z" />
+                                    </svg>Pedir</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="produto-card" data-cat="perifericos"
+                        data-nome="teclado mouse combo kit wireless sem fio">
+                        <div class="produto-foto">
+                            <div class="produto-foto-placeholder"><svg viewBox="0 0 24 24">
+                                    <rect x="3" y="3" width="18" height="18" rx="2" />
+                                    <circle cx="8.5" cy="8.5" r="1.5" />
+                                    <polyline points="21 15 16 10 5 21" />
+                                </svg>Foto</div>
+                            <div class="produto-cat-badge" style="color:#d32f2f;">Periférico</div>
+                        </div>
+                        <div class="produto-body">
+                            <div class="produto-nome">Kit Teclado + Mouse Wireless</div>
+                            <div class="produto-desc">Combo sem fio com receptor USB único, bateria de longa duração.
+                            </div>
+                            <div class="produto-footer">
+                                <div class="produto-preco"><sup>R$</sup>129,90</div>
+                                <a href="https://wa.me/558131011800?text=Olá! Tenho interesse no Kit Teclado + Mouse Wireless."
+                                    target="_blank" class="produto-wa"><svg viewBox="0 0 24 24">
+                                        <path
+                                            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
+                                        <path
+                                            d="M12 0C5.373 0 0 5.373 0 12c0 2.125.558 4.121 1.532 5.857L.057 23.5l5.784-1.517A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 0 1-5.006-1.371l-.359-.214-3.733.979 1.004-3.648-.232-.375A9.818 9.818 0 1 1 12 21.818z" />
+                                    </svg>Pedir</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="produto-card" data-cat="perifericos"
+                        data-nome="monitor led 24 polegadas full hd hdmi vga">
+                        <div class="produto-foto">
+                            <div class="produto-foto-placeholder"><svg viewBox="0 0 24 24">
+                                    <rect x="3" y="3" width="18" height="18" rx="2" />
+                                    <circle cx="8.5" cy="8.5" r="1.5" />
+                                    <polyline points="21 15 16 10 5 21" />
+                                </svg>Foto</div>
+                            <div class="produto-cat-badge" style="color:#d32f2f;">Periférico</div>
+                        </div>
+                        <div class="produto-body">
+                            <div class="produto-nome">Monitor LED 24" Full HD</div>
+                            <div class="produto-desc">Resolução 1920×1080, entrada HDMI e VGA, tela slim sem bordas.
+                            </div>
+                            <div class="produto-footer">
+                                <div class="produto-preco"><sup>R$</sup>699,90</div>
+                                <a href="https://wa.me/558131011800?text=Olá! Tenho interesse no Monitor LED 24 Full HD."
+                                    target="_blank" class="produto-wa"><svg viewBox="0 0 24 24">
+                                        <path
+                                            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
+                                        <path
+                                            d="M12 0C5.373 0 0 5.373 0 12c0 2.125.558 4.121 1.532 5.857L.057 23.5l5.784-1.517A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 0 1-5.006-1.371l-.359-.214-3.733.979 1.004-3.648-.232-.375A9.818 9.818 0 1 1 12 21.818z" />
+                                    </svg>Pedir</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="produto-card" data-cat="impressoras"
+                        data-nome="impressora hp deskjet multifuncional colorida wifi">
+                        <div class="produto-foto">
+                            <div class="produto-foto-placeholder"><svg viewBox="0 0 24 24">
+                                    <rect x="3" y="3" width="18" height="18" rx="2" />
+                                    <circle cx="8.5" cy="8.5" r="1.5" />
+                                    <polyline points="21 15 16 10 5 21" />
+                                </svg>Foto</div>
+                            <div class="produto-cat-badge" style="color:#e65100;">Impressora</div>
+                        </div>
+                        <div class="produto-body">
+                            <div class="produto-nome">Impressora HP DeskJet Plus</div>
+                            <div class="produto-desc">Multifuncional colorida, Wi-Fi, impressão frente e verso, app HP
+                                Smart.</div>
+                            <div class="produto-footer">
+                                <div class="produto-preco"><sup>R$</sup>549,90</div>
+                                <a href="https://wa.me/558131011800?text=Olá! Tenho interesse na Impressora HP DeskJet Plus."
+                                    target="_blank" class="produto-wa"><svg viewBox="0 0 24 24">
+                                        <path
+                                            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
+                                        <path
+                                            d="M12 0C5.373 0 0 5.373 0 12c0 2.125.558 4.121 1.532 5.857L.057 23.5l5.784-1.517A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 0 1-5.006-1.371l-.359-.214-3.733.979 1.004-3.648-.232-.375A9.818 9.818 0 1 1 12 21.818z" />
+                                    </svg>Pedir</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="produto-card" data-cat="redes"
+                        data-nome="roteador wifi router dual band wireless internet ac1200">
+                        <div class="produto-foto">
+                            <div class="produto-foto-placeholder"><svg viewBox="0 0 24 24">
+                                    <rect x="3" y="3" width="18" height="18" rx="2" />
+                                    <circle cx="8.5" cy="8.5" r="1.5" />
+                                    <polyline points="21 15 16 10 5 21" />
+                                </svg>Foto</div>
+                            <div class="produto-cat-badge" style="color:#2e7d32;">Redes</div>
+                        </div>
+                        <div class="produto-body">
+                            <div class="produto-nome">Roteador Wi-Fi Dual Band</div>
+                            <div class="produto-desc">AC1200, 2.4GHz e 5GHz, 4 antenas, cobertura até 150m².</div>
+                            <div class="produto-footer">
+                                <div class="produto-preco"><sup>R$</sup>189,90</div>
+                                <a href="https://wa.me/558131011800?text=Olá! Tenho interesse no Roteador Wi-Fi Dual Band."
+                                    target="_blank" class="produto-wa"><svg viewBox="0 0 24 24">
+                                        <path
+                                            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
+                                        <path
+                                            d="M12 0C5.373 0 0 5.373 0 12c0 2.125.558 4.121 1.532 5.857L.057 23.5l5.784-1.517A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 0 1-5.006-1.371l-.359-.214-3.733.979 1.004-3.648-.232-.375A9.818 9.818 0 1 1 12 21.818z" />
+                                    </svg>Pedir</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="produto-card" data-cat="acessorios" data-nome="cabo hdmi 2 metros tv monitor 4k">
+                        <div class="produto-foto">
+                            <div class="produto-foto-placeholder"><svg viewBox="0 0 24 24">
+                                    <rect x="3" y="3" width="18" height="18" rx="2" />
+                                    <circle cx="8.5" cy="8.5" r="1.5" />
+                                    <polyline points="21 15 16 10 5 21" />
+                                </svg>Foto</div>
+                            <div class="produto-cat-badge" style="color:#6a1a9a;">Acessório</div>
+                        </div>
+                        <div class="produto-body">
+                            <div class="produto-nome">Cabo HDMI 2.0 — 2 metros</div>
+                            <div class="produto-desc">Suporte 4K 60Hz, conector banhado a ouro, blindagem
+                                anti-interferência.</div>
+                            <div class="produto-footer">
+                                <div class="produto-preco"><sup>R$</sup>39,90</div>
+                                <a href="https://wa.me/558131011800?text=Olá! Tenho interesse no Cabo HDMI 2 metros."
+                                    target="_blank" class="produto-wa"><svg viewBox="0 0 24 24">
+                                        <path
+                                            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
+                                        <path
+                                            d="M12 0C5.373 0 0 5.373 0 12c0 2.125.558 4.121 1.532 5.857L.057 23.5l5.784-1.517A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 0 1-5.006-1.371l-.359-.214-3.733.979 1.004-3.648-.232-.375A9.818 9.818 0 1 1 12 21.818z" />
+                                    </svg>Pedir</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="produto-card" data-cat="acessorios"
+                        data-nome="pendrive usb 64gb flash drive armazenamento">
+                        <div class="produto-foto">
+                            <div class="produto-foto-placeholder"><svg viewBox="0 0 24 24">
+                                    <rect x="3" y="3" width="18" height="18" rx="2" />
+                                    <circle cx="8.5" cy="8.5" r="1.5" />
+                                    <polyline points="21 15 16 10 5 21" />
+                                </svg>Foto</div>
+                            <div class="produto-cat-badge" style="color:#6a1a9a;">Acessório</div>
+                        </div>
+                        <div class="produto-body">
+                            <div class="produto-nome">Pendrive USB 3.0 — 64GB</div>
+                            <div class="produto-desc">Leitura até 100MB/s, compacto, compatível com PC, notebook e smart
+                                TV.</div>
+                            <div class="produto-footer">
+                                <div class="produto-preco"><sup>R$</sup>49,90</div>
+                                <a href="https://wa.me/558131011800?text=Olá! Tenho interesse no Pendrive USB 64GB."
+                                    target="_blank" class="produto-wa"><svg viewBox="0 0 24 24">
+                                        <path
+                                            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
+                                        <path
+                                            d="M12 0C5.373 0 0 5.373 0 12c0 2.125.558 4.121 1.532 5.857L.057 23.5l5.784-1.517A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 0 1-5.006-1.371l-.359-.214-3.733.979 1.004-3.648-.232-.375A9.818 9.818 0 1 1 12 21.818z" />
+                                    </svg>Pedir</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="empty-state" id="emptyState">
+                        <svg viewBox="0 0 24 24">
+                            <circle cx="11" cy="11" r="8" />
+                            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                        </svg>
+                        <p>Nenhum produto encontrado</p>
+                        <small>Tente outro termo ou categoria</small>
+                    </div>
+
+                </div>
+            </div>
+
+            <footer class="main-footer">
+                <div class="main-footer-brand"><span>CIA</span> MICRO Informática</div>
+                <div class="main-footer-copy">© 2025 Cia Micro. Todos os direitos reservados.</div>
+            </footer>
+        </div>
+
+    </div><!-- /main -->
+
+    <script>
+        // ─── SIDEBAR DESKTOP: COLAPSAR ───
+        function toggleCollapse() {
+            document.body.classList.toggle('sidebar-collapsed');
+        }
+
+        // ─── SIDEBAR MOBILE: ABRIR/FECHAR ───
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+            document.getElementById('sidebarOverlay').classList.toggle('show');
+        }
+        function closeSidebar() {
+            document.getElementById('sidebar').classList.remove('open');
+            document.getElementById('sidebarOverlay').classList.remove('show');
+        }
+
+        // ─── PÁGINAS ───
+        function showPage(name) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById('page-' + name).classList.add('active');
+            document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+            const idx = { home: 0, catalogo: 1 };
+            const links = document.querySelectorAll('.sidebar-link');
+            if (links[idx[name]]) links[idx[name]].classList.add('active');
+            closeSidebar();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            if (name === 'catalogo') updateCount();
+        }
+
+        // ─── FILTROS ───
+        let currentCat = 'todos';
+        let currentSearch = '';
+
+        function filterCat(cat) {
+            currentCat = cat;
+            document.querySelectorAll('.filter-btn').forEach(b => {
+                b.classList.toggle('active', b.textContent.trim().toLowerCase().replace('é', 'e').startsWith(
+                    cat === 'todos' ? 'tod' : cat === 'perifericos' ? 'per' : cat === 'impressoras' ? 'imp' : cat === 'notebooks' ? 'not' : cat === 'desktops' ? 'des' : cat === 'redes' ? 'red' : 'ace'
+                ));
+            });
+            const map = { todos: '— Todos', notebooks: '— Notebooks', desktops: '— Desktops', perifericos: '— Periféricos', impressoras: '— Impressoras', redes: '— Redes', acessorios: '— Acessórios' };
+            document.getElementById('catTitleLabel').textContent = map[cat] || '';
+            applyFilters();
+        }
+
+        function onSearch(val) {
+            currentSearch = val.toLowerCase().trim();
+            if (document.getElementById('page-catalogo').classList.contains('active') === false) showPage('catalogo');
+            applyFilters();
+        }
+
+        function applyFilters() {
+            const cards = document.querySelectorAll('.produto-card[data-cat]');
+            let visible = 0;
+            cards.forEach(card => {
+                const catOk = currentCat === 'todos' || card.dataset.cat === currentCat;
+                const searchOk = !currentSearch ||
+                    card.dataset.nome.includes(currentSearch) ||
+                    card.querySelector('.produto-nome').textContent.toLowerCase().includes(currentSearch) ||
+                    card.querySelector('.produto-desc').textContent.toLowerCase().includes(currentSearch);
+                const show = catOk && searchOk;
+                card.classList.toggle('hidden', !show);
+                if (show) visible++;
+            });
+            document.getElementById('emptyState').classList.toggle('show', visible === 0);
+            updateCount(visible);
+        }
+
+        function updateCount(n) {
+            const total = document.querySelectorAll('.produto-card[data-cat]').length;
+            const c = n !== undefined ? n : total;
+            document.getElementById('searchCount').textContent = c + ' produto' + (c !== 1 ? 's' : '');
+        }
+    </script>
+</body>
+
+</html>
